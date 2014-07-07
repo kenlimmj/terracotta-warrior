@@ -1,3 +1,22 @@
+String.prototype.toTitleCase = function() {
+    var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;
+
+    return this.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, function(match, index, title) {
+        if (index > 0 && index + match.length !== title.length &&
+            match.search(smallWords) > -1 && title.charAt(index - 2) !== ":" &&
+            (title.charAt(index + match.length) !== '-' || title.charAt(index - 1) === '-') &&
+            title.charAt(index - 1).search(/[^\s-]/) < 0) {
+            return match.toLowerCase();
+        }
+
+        if (match.substr(1).search(/[A-Z]|\../) > -1) {
+            return match;
+        }
+
+        return match.charAt(0).toUpperCase() + match.substr(1);
+    });
+};
+
 var Type = (function() {
     var charList = [
         "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
@@ -48,17 +67,17 @@ var Type = (function() {
         },
         randTitle: function(size) {
             var size = size || RandUtils.randRange(3, 10),
-                result = "";
+                result = Type.randWord();
 
             for (var i = 0; i < size; i++) {
-                result += Type.randWord();
+                result += " " + Type.randWord();
             }
 
-            return result;
+            return result.toTitleCase();
         },
         randSentence: function(size) {
             var size = size || RandUtils.randRange(10, 25),
-                result = Type.randWord();
+                result = Type.randWord().toTitleCase();
 
             for (var i = 0; i < size; i++) {
                 result += " " + Type.randWord();
