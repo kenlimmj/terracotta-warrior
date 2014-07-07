@@ -17,6 +17,13 @@ var RandUtils = (function() {
         },
         randBoolean: function() {
             return Math.random() > 0.5 ? true : false;
+        },
+        randImage = function(width, height) {
+            var width = width || 500,
+                height = height || 500,
+                providerUrl = "//lorempixel.com",
+
+            return providerUrl + "/" + width + "/" + height;
         }
     }
 })();

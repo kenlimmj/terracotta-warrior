@@ -47,17 +47,17 @@ var Type = (function() {
               result = "";
 
           for (var i = 0; i < size; i++) {
-              result += randWord();
+              result += Type.randWord();
           }
 
           return result;
-        }
+        },
         randSentence: function(size) {
             var size = size || Util.randRange(10, 25),
                 result = "";
 
             for (var i = 0; i < size; i++) {
-                result += randWord();
+                result += Type.randWord();
             }
 
             return result + ".";
@@ -67,7 +67,7 @@ var Type = (function() {
                 result = "";
 
             for (var i = 0; i < size; i++) {
-                result += randSentence();
+                result += Type.randSentence();
             }
 
             return result;

@@ -14,6 +14,5 @@ var User = (function() {
 
             return providerUrl + "/" + width + "/" + height + "/" + category;
         }
-        isValid: function() {}
     }
 })();
