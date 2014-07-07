@@ -1,0 +1,20 @@
+{
+  "name": "seedrandom",
+  "version": "2.3.6",
+  "description": "Seeded random number generator for Javascript.",
+  "devDependencies": {
+    "qunit": "latest",
+    "requirejs": "latest"
+  },
+  "homepage": "https://github.com/davidbau/seedrandom",
+  "_release": "2.3.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.3.6",
+    "commit": "70950d8bad0894548993befbf6ecfcb3cd7af43d"
+  },
+  "_source": "git://github.com/davidbau/seedrandom.git",
+  "_target": "~2.3.6",
+  "_originalSource": "seedrandom",
+  "_direct": true
+}
