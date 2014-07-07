@@ -2,7 +2,7 @@ var Markdown = (function() {
     return {
         randImageMarkup: function() {
             var altText = "![" + Type.randTitle() + "]",
-                markupImage = "(" + RandUtilss.randImage() + ")";
+                markupImage = "(" + RandUtils.randImage() + ")";
 
             return altText + markupImage;
         },
