@@ -36,20 +36,22 @@ var Markdown = (function() {
             return "> " + Type.randSentence();
         },
         randContent: function(size) {
-            var size = size || RandUtils.randRange(3,7),
+            var size = size || RandUtils.randRange(3, 7),
                 result = Type.randParagraph();
 
             for (var i = 0; i < size; i++) {
                 var diceRoll = Math.random();
 
-                if (diceRoll < 1/5) {
+                if (diceRoll < 1 / 6) {
                     result += "\n\n" + Markdown.randEnumList();
-                } else if (1/5 <= diceRoll < 2/5) {
+                } else if (1 / 6 <= diceRoll < 2 / 6) {
                     result += "\n\n" + Markdown.randItemList();
-                } else if (2/5 <= diceRoll < 3/5) {
+                } else if (2 / 6 <= diceRoll < 3 / 6) {
                     result += "\n\n" + Equation.wrapMath(Equation.randEquation());
-                } else if (3/5 <= diceRoll < 4/5) {
+                } else if (3 / 6 <= diceRoll < 4 / 6) {
                     result += "\n\n" + Type.randParagraph();
+                } else if (4 / 6 <= diceRoll < 5 / 6) {
+                    result += "\n\n" + Markdown.randImageMarkup();
                 } else {
                     result += "\n\n" + Markdown.randQuote();
                 }
