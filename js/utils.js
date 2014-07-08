@@ -10,7 +10,7 @@ var RandUtils = (function() {
             return result;
         },
         randRange: function(min, max) {
-            return Math.random() * (max - min) + min;
+            return Math.floor(Math.random() * (max - min) + min);
         },
         randFromArray: function(arr) {
             return arr[Math.floor(Math.random() * arr.length)];

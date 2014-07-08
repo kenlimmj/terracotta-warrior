@@ -37,11 +37,25 @@ var Markdown = (function() {
         },
         randContent: function(size) {
             var size = size || RandUtils.randRange(3,7),
-                result = "";
+                result = Type.randParagraph();
 
             for (var i = 0; i < size; i++) {
+                var diceRoll = Math.random();
 
+                if (diceRoll < 1/5) {
+                    result += "\n\n" + Markdown.randEnumList();
+                } else if (1/5 <= diceRoll < 2/5) {
+                    result += "\n\n" + Markdown.randItemList();
+                } else if (2/5 <= diceRoll < 3/5) {
+                    result += "\n\n" + Equation.wrapMath(Equation.randEquation());
+                } else if (3/5 <= diceRoll < 4/5) {
+                    result += "\n\n" + Type.randParagraph();
+                } else {
+                    result += "\n\n" + Markdown.randQuote();
+                }
             }
+
+            return result;
         }
     }
 })();

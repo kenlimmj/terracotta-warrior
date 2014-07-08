@@ -23,6 +23,8 @@ var Type = (function() {
         "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
     ];
 
+    var punctuationList = [",", ";", " -"];
+
     var loremList = [
         "alias", "consequatur", "aut", "perferendis", "sit", "voluptatem", "accusantium",
         "doloremque", "aperiam", "eaque", "ipsa", "quae", "ab", "illo", "inventore",
@@ -80,7 +82,11 @@ var Type = (function() {
                 result = Type.randWord().toTitleCase();
 
             for (var i = 0; i < size; i++) {
-                result += " " + Type.randWord();
+                if (i > 1 && i % RandUtils.randRange(11, 15) === 1 && size - i > 5) {
+                    result += RandUtils.randFromArray(punctuationList) + " " + Type.randWord();
+                } else {
+                    result += " " + Type.randWord();
+                }
             }
 
             return result + ".";
