@@ -1,12 +1,49 @@
 var User = (function() {
-    var firstName = ['Bouncing', 'Crazy', 'Happy', 'Cute', 'Shy', 'Dancing', 'Legless', 'Sexy'],
-        lastName = ['Pikachu', 'Gandalf', 'Godzilla', 'Sherlock', 'Amoeba', 'Hedgehog', 'Panda', 'TARDIS', 'Snape', 'Hulk', 'Llama'];
+    var firstName = [
+        'Admirable', 'Amusing', 'Annoying', 'Anonymous', 'Applaudable', 'Attacked',
+        'Baked', 'Balancing', 'Banging', 'Bare', 'Bathing', 'Battling', 'Beaming',
+        'Begging', 'Bespectacled', 'Biting', 'Blessed', 'Blinking', 'Blotting',
+        'Blue', 'Blushing', 'Boasting', 'Boiling', 'Bolting', 'Borrowing',
+        'Bouncing', 'Boxing', 'Braking', 'Breathing', 'Bubbling', 'Bumping',
+        'Burning', 'Buzzing', 'Camping', 'Caring', 'Charging', 'Cheering',
+        'Chewing', 'Childof', 'Chopping', 'Clapping', 'Confused', 'Confusing',
+        'Dancing', 'Derping', 'Dreaming', 'Droopy', 'Drumming', 'Exciting',
+        'Expanding', 'Exploding', 'Fatherof', 'Flapping', 'Flashing', 'Floating',
+        'Glowing', 'Green', 'Grinning', 'Grumpy', 'Hammering', 'Happy', 'Hopping',
+        'Itching', 'Jogging', 'Jolly', 'Jumping', 'Kicking', 'Legless', 'Long',
+        'Many', 'Motherof', 'Much', 'Nodding', 'Oblivious', 'Odd', 'Orange',
+        'Pecking', 'Pinching', 'Pink', 'Pointing', 'Poking', 'Popping', 'Prancing',
+        'Preaching', 'Punching', 'Reigning', 'Rhyming', 'Rolling', 'Sailing',
+        'Sexy', 'Shopping', 'Short', 'Shrugging', 'Shy', 'Smiling', 'Smoking',
+        'Sniffing', 'Snoring', 'Sparkling', 'Squeaking', 'Tickling', 'Traveling',
+        'Very', 'Wandering', 'Wanting', 'Waving', 'Whistling', 'Winking', 'Wobbling',
+        'Wrecking', 'Wriggling', 'Yawning', 'Yelling', 'Yellow'
+    ];
+
+    var lastName = [
+        'Actress', 'Amoeba', 'Bacon', 'Batman', 'Beach', 'Bieber', 'Bike', 'Bulbasaur',
+        'Bunny', 'Butler', 'Button', 'Cactus', 'Camel', 'Candle', 'Bacteriophage',
+        'Carrot', 'Cat', 'Chair', 'Charmander', 'Cheeseburger', 'Clover', 'Comb',
+        'Cookie', 'Cupcake', 'Derp', 'Desert', 'Dish', 'Doge', 'Doubledown',
+        'Dragons', 'Earthworm', 'Elephant', 'Faucet', 'Filetmignon', 'Flower',
+        'Flute', 'Foot', 'Football', 'Frog', 'Gandalf', 'Glitter', 'Godzilla',
+        'Hedgehog', 'Hobbit', 'Hodor', 'Hulk', 'Iguana', 'Kitty', 'Knot', 'Leaf',
+        'Lizard', 'Llama', 'Lobster', 'Mermaid', 'Miley', 'Mimosa', 'Mosquito',
+        'Mushroom', 'Mystique', 'Nibblets', 'Munchkin', 'Olive', 'Omelet', 'Pelican',
+        'Pancake', 'Panda', 'Pen', 'Penguin', 'Phone', 'Piano', 'Pikachu', 'Pillar',
+        'Pipe', 'Ball', 'Pocket', 'Potato', 'Potter', 'Powder', 'Rainbows', 'Record',
+        'Rose', 'Saiyan', 'Salad', 'Salt', 'Scorpio', 'Senor', 'Sherlock', 'Silk',
+        'Skates', 'Smeagol', 'Snape', 'Spaghetti', 'Speedboat', 'Spiderman',
+        'Squirtle', 'Statue', 'Stool', 'Streetlight', 'Suarez', 'Subway', 'Superman',
+        'Tadpole', 'TARDIS', 'Town', 'Tulip', 'Turnip', 'Ukelele', 'Unicorn',
+        'Vacuum', 'Vampire', 'Wolverine', 'Worm', 'Xylophone',
+    ];
 
     return {
         randUsername: function() {
             return RandUtils.randFromArray(Username.firstName) + RandUtils.randFromArray(Username.lastName) + RandUtils.randFullNumber(3);
         },
-        randAvatarUrl: function(width,height) {
+        randAvatarUrl: function(width, height) {
             var width = width || 500,
                 height = height || 500,
                 providerUrl = "//lorempixel.com",
