@@ -3,7 +3,7 @@ Terracotta Warrior
 
 Named after the sculptures of soldiers buried with the infamous chinese emperor Qin Shi Huang. Current estimates put the number at over 8,000 soldiers, 130 chariots (each with 4 horses) and 150 cavalry horses. No two sculptures were exactly identical.
 
-More realistically, terracotta-warrior generates fake data. It does the usual bells and whistles that other fake data generators offer, with a couple of bonus features:
+More realistically, ```terracotta-warrior``` generates fake data. It does the usual bells and whistles that other fake data generators offer, with a couple of bonus features:
 
 - **Support for randomized punctuation.** This makes things a lot more&hellip; realistic when you're generating paragraphs of text.
 - **LaTeX/MathJax equations.** Exactly as advertised. terracotta-warrior generates fake terms, coefficients, and LaTeX commands, then strings them up to form a fake equation.
@@ -11,7 +11,7 @@ More realistically, terracotta-warrior generates fake data. It does the usual be
 
 ## Usage
 Load all the files from the JS directory. For example:
-```javascript
+```html
 <script src="js/utils.js"></script>
 <script src="js/type.js"></script>
 <script src="js/user.js"></script>
@@ -54,11 +54,9 @@ There are currently no build/test scripts included, but feel free to minify ever
 
 ### Using Seeds
 
-Seeds in JS are a little problematic because supporting them inevitably means writing a Mersenne Twister or something of that nature. Since not everyone needs them, I figured I'll leave them out by default. However if you do require that feature, someone's got us covered
+Seeds in JS are a little problematic because supporting them inevitably means writing a Mersenne Twister or something of that nature. Since not everyone needs them, I figured I'll leave them out by default. However if you do require that feature, someone's got us covered: [Seedrandom.js](https://github.com/davidbau/seedrandom)
 
-[Seedrandom.js](https://github.com/davidbau/seedrandom)
-
-Drop this in and specify a seed like so:
+Drop that in and specify a seed like so:
 ```javascript
 Math.seedrandom('someSeed');
 ```
