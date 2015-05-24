@@ -35,7 +35,7 @@ var mf = new tw.MarkdownFactory({ engine: re });    // Markdown Content
 
 
 ### `RandEngine`
-The `RandEngine` namespace provides functions that assist with the creation and selection of random variables. In order to ensure reproducibility of the data generated, it overwrites `Math.random()` internally with a seeded RNG from David Bau's [seedrandom](https://github.com/davidbau/seedrandom).
+The `RandEngine` namespace provides functions that assist with the creation and selection of random variables. In order to ensure reproducibility of the data generated, it overwrites `Math.random()` internally with a seeded RNG from David Bau's excellent [seedrandom](https://github.com/davidbau/seedrandom) package. He didn't pay me to say this, but do buy him a beer if you can.
 
 The constructor for `RandEngine` has two configuration parameters, shown here with their default values:
 ```js
@@ -47,20 +47,25 @@ var opts = {
 var re = new tw.RandEngine(opts);
 ```
 
-- `imgProviderUrl` is the URL to the service which provides images.
-- `seed` can be anything (a number or string) used as a seed for the random number generator to ensure that the same "random" values are generated each time. This helps with verifying the result of changes when using `terracotta-warrior` as part of a bigger system, in which `terracotta-warrior` is the entity responsible for producing fake data. The number 4 is chosen because [xkcd](https://xkcd.com/221/) says that the IEEE approved random number is 4, and xkcd is always correct.
+- `imgProviderUrl` is the URL to the service which provides images. This uses a protocol-less address to maintain compatibility across a broad range of systems, though you should feel free to use `https` if you can afford it.
+- `seed` can be anything (a number or string) used as a seed for the random number generator to ensure that the same "random" values are generated each time. This helps with feature verification when using `terracotta-warrior` as part of a bigger system, in which `terracotta-warrior` is the entity responsible for producing fake data. The number 4 is chosen because [xkcd](https://xkcd.com/221/) says that according to IEEE RFC 1149.5, an approved random number is 4, and xkcd is always correct.
 
-### TextFactory
+Methods:
+- `randFullNumber(n)` generates a number with n digits, and with padding zeros in front. For example, `n=3` could give you 009. If no input is provided, `n` defaults to 3.
+- `randRange(min, max)` generates an integer `x` such that min ≤ x ≤ max. For example, `min = 1` and `max = 3` could give you 2. If `min` and `max` are the same number, `x` will always be that number as well. If `max` is smaller than `min`, they will be swapped at runtime to ensure that the function is always monotonically increasing. If no input is provided, `min` defaults to 0 and `max` defaults to 1.
+- `randBoolean()` generates either a `true` or `false` boolean value.
+- `randImage(width, height, category)` generates a random image of size `width` and `height` using the image provider described by `imgProviderUrl`. If either the width or height is not specified, it defaults to a value of 500px. If the category is not specified, it is not used. 
 
-### UserFactory
+### `TextFactory`
 
-### EquationFactory
+### `UserFactory`
+
+### `EquationFactory`
 
 ### MarkdownFactory
 
 ### Utils
 
-- ``RandUtils.randFullNumber(n)`` generates a number of n digits with padding zeros in front. For example, ``n=3`` could give you 009.
 - ``RandUtils.randRange(min,max)`` generates an integer x such that min < x < max. For example, ``min = 1`` and ``max = 3`` could give you 2.
 - ``RandUtils.randFromArray(arr)`` selects an element from the array ``arr``. For example, ``arr = ['a','b','c']`` could give you ``'a'``.
 - ``RandUtils.randBoolean()`` generates either a true or false boolean value.
