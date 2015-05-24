@@ -1,24 +1,62 @@
 Terracotta Warrior
 ==================
 
-Named after the sculptures of soldiers buried with the infamous chinese emperor Qin Shi Huang. Current estimates put the number at over 8,000 soldiers, 130 chariots (each with 4 horses) and 150 cavalry horses. No two sculptures were exactly identical.
+Named after the sculptures of soldiers buried in the tomb of the (in)famous Chinese emperor Qin Shi Huang. Current estimates put the number of sculptures at over 8,000 soldiers, 130 chariots (each with 4 horses) and 150 cavalry horses. No two sculptures were exactly identical.
 
-More realistically, ```terracotta-warrior``` generates fake data. It does the usual bells and whistles that other fake data generators offer, with a couple of bonus features:
+`terracotta-warrior` generates fake data. It does the usual bells and whistles that other fake data generators offer (random selections from arrays, random number ranges, yada), with a couple of bonus features:
 
-- **Support for randomized punctuation.** This makes things a lot more&hellip; realistic when you're generating paragraphs of text.
-- **LaTeX/MathJax equations.** Exactly as advertised. terracotta-warrior generates fake terms, coefficients, and LaTeX commands, then strings them up to form a fake equation.
-- **Markdown content.** This includes itemized and enumerated lists, quotes, and markup for fake images.
+- **Support for randomized punctuation.** This makes things a lot more&hellip; realistic when you're generating paragraphs of text. See that ellipse there?
+- **LaTeX/MathJax equations.** Exactly as advertised. `terracotta-warrior` generates fake terms, coefficients, and LaTeX commands, then strings them up to form a fake equation.
+- **Markdown content.** This includes itemized and enumerated lists, quotes, and markup for fake images, as well as combinations thereof.
+
+To top things off, everything was designed to be customizable and swappable. Allergic to Lorem Ipsum? Provide your own word list! Generating data for a different language? Provide your own character list!
 
 ## Usage
-Load all the files from the JS directory. For example:
-```html
-<script src="js/utils.js"></script>
-<script src="js/type.js"></script>
-<script src="js/user.js"></script>
-<script src="js/equation.js"></script>
-<script src="js/markdown.js"></script>
+Install as you would any Node package:
+```shell
+npm install --save terracotta-warrior
 ```
-There are currently no build/test scripts included, but feel free to minify everything as you see fit.
+Feel free to use `--save-dev` instead of `--save` if you are using `terracotta-warrior` to mock data only in development.
+
+To get started, require `terracotta-warrior`, then initialize the factories which you need:
+```js
+var tw = require('terracotta-warrior');
+
+// Create a common random generator for all our factories
+var re = new tw.RandEngine();
+
+var tf = new tw.TextFactory({ engine: re });        // Titles and Paragraphs
+var uf = new tw.UserFactory({ engine: re });        // User Profiles
+var ef = new tw.EquationFactory({ engine: re });    // LaTeX Equations
+var mf = new tw.MarkdownFactory({ engine: re });    // Markdown Content
+```
+
+## Design Principles
+
+
+### `RandEngine`
+The `RandEngine` namespace provides functions that assist with the creation and selection of random variables. In order to ensure reproducibility of the data generated, it overwrites `Math.random()` internally with a seeded RNG from David Bau's [seedrandom](https://github.com/davidbau/seedrandom).
+
+The constructor for `RandEngine` has two configuration parameters, shown here with their default values:
+```js
+var opts = {
+    imgProviderUrl: '//lorempixel.com',
+    seed: 4
+}
+
+var re = new tw.RandEngine(opts);
+```
+
+- `imgProviderUrl` is the URL to the service which provides images.
+- `seed` can be anything (a number or string) used as a seed for the random number generator to ensure that the same "random" values are generated each time. This helps with verifying the result of changes when using `terracotta-warrior` as part of a bigger system, in which `terracotta-warrior` is the entity responsible for producing fake data. The number 4 is chosen because [xkcd](https://xkcd.com/221/) says that the IEEE approved random number is 4, and xkcd is always correct.
+
+### TextFactory
+
+### UserFactory
+
+### EquationFactory
+
+### MarkdownFactory
 
 ### Utils
 
