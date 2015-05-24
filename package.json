@@ -1,0 +1,35 @@
+{
+  "name": "terracotta-warrior",
+  "version": "1.0.0",
+  "description": "Another fake data generator - except this one does MathJax/LaTeX equations, Markdown, and all other fancy things.",
+  "main": "dist/terracottaWarrior.js",
+  "dependencies": {},
+  "devDependencies": {
+    "assert": "^1.3.0",
+    "del": "^1.2.0",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^5.1.0",
+    "gulp-mocha": "^2.1.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-strip-debug": "^1.0.2",
+    "gulp-uglify": "^1.2.0",
+    "lodash": "^3.9.1",
+    "mocha": "^2.2.5",
+    "run-sequence": "^1.1.0",
+    "seedrandom": "^2.4.0",
+    "vinyl-buffer": "^1.0.0"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenlimmj/terracotta-warrior.git"
+  },
+  "author": "Lim Mingje, Kenneth <me@kenlimmj.com> (https://kenlimmj.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kenlimmj/terracotta-warrior/issues",
+    "email": "me@kenlimmj.com"
+  },
+  "homepage": "https://github.com/kenlimmj/terracotta-warrior#readme"
+}

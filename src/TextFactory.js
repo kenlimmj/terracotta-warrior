@@ -2,28 +2,36 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 09:39:42
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-23 19:02:45
+ * @Last Modified time: 2015-05-24 18:08:14
  */
 
 'use strict';
 
 import RandEngine from "./RandEngine";
 
+// List of characters in the alphabet.
 const defaultCharList = [
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
   'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
 ];
 
+// List of punctuation used in the middle of sentences
 const defaultBasePuncList = [',', ';', ' -', ':'];
+
+// List of punctuation used at the end of sentences
 const defaultEndingPuncList = ['.', '?', '!'];
 
+// Flag to toggle whether enhanced punctuation is used
 const defaultEnhancedPunctuation = false;
+
+// List of punctuation whose correct display may or may not be supported
 const defaultEnhancedPuncList = defaultBasePuncList.concat([
   ' ---',
   ' --',
   '...'
 ]);
 
+// List of default words from the Lorem Ipsum library
 const defaultWordList = [
   'a', 'ab', 'accusamus', 'accusantium', 'ad', 'adipisci', 'alias', 'aliquam',
   'aliquid', 'amet', 'animi', 'aperiam', 'architecto', 'asperiores',
@@ -53,6 +61,8 @@ const defaultWordList = [
   'voluptate', 'voluptatem', 'voluptates', 'voluptatibus', 'voluptatum'
 ];
 
+// Capitalizes the first character of every word in the input string
+// unless it is a connecting word
 let toTitleCase = function (input) {
   let smallWords =
     /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;
@@ -83,6 +93,8 @@ export default class {
     this.wordList = options.wordList || defaultWordList;
     this.endingPuncList = options.endingPuncList || defaultEndingPuncList;
 
+    // Switch the punctuation list depending on whether enhanced
+    // punctuation is requested
     if (options.enhancedPunctuation) {
       this.puncList = options.puncList || defaultPuncList;
     } else {
@@ -91,20 +103,25 @@ export default class {
   }
 
   randLetter() {
+    // Draw a letter at random from the character list
     return this.engine.randFromArray(this.charList);
   }
 
   randWord() {
+    // Draw a letter at random from the word list
     return this.engine.randFromArray(this.wordList);
   }
 
   randTitle(size = this.engine.randRange(3, 10)) {
+    // Seed the result with a random word
     let result = this.randWord();
 
+    // Add to the result until the desired length is reached
     for (var i = 1; i < size; i++) {
       result += " " + this.randWord();
     }
 
+    // Convert the result to title case, because title.
     return toTitleCase(result);
   }
 
@@ -113,9 +130,14 @@ export default class {
     puncSpacing = this.engine.randRange(11, 15),
     widowThreshold = 5
   ) {
+    // Seed the result with a capitalized random word
     let result = toTitleCase(this.randWord());
 
+    // Add to the result until the desired length is reached
     for (let i = 1; i < size; i++) {
+      // Insert punctuation before a word only if punctuation has not
+      // already been inserted recently, and if we are not too close
+      // to the end of the sentence. This makes everything more realistic.
       if (i > 1 && i % puncSpacing === 1 && size - i > widowThreshold) {
         result += this.engine.randFromArray(this.puncList) + " " + this.randWord();
       } else {
@@ -123,12 +145,15 @@ export default class {
       }
     }
 
+    // Append ending punctuation
     return result + this.engine.randFromArray(this.endingPuncList);
   }
 
   randParagraph(size = this.engine.randRange(3, 10)) {
+    // Seed the result with a random sentence
     let result = this.randSentence();
 
+    // Add to the result until the desired length is reached
     for (let i = 1; i < size; i++) {
       result += " " + this.randSentence();
     }

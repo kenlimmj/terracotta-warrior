@@ -2,61 +2,54 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 12:27:17
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-24 10:46:54
+ * @Last Modified time: 2015-05-24 13:48:39
  */
 
 'use strict';
 
-var assign = require('lodash/object/assign');
 var babel = require('gulp-babel');
-var babelify = require('babelify');
-var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
-var chalk = require('chalk');
+var del = require('del');
 var gulp = require('gulp');
-var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
-var source = require('vinyl-source-stream');
+var rename = require('gulp-rename');
 var sourcemaps = require('gulp-sourcemaps');
-var watchify = require('watchify');
+var stripDebug = require('gulp-strip-debug');
+var uglify = require('gulp-uglify');
+var runSequence = require('run-sequence');
+var mocha = require('gulp-mocha');
 
-var ENTRY_POINT = 'src/main.js';
-var OUTPUT_FILE_NAME = 'tw.js';
+
+var INPUT_FILE_GLOB = 'src/*.js';
 var OUTPUT_FILE_DIR = './dist';
 
-// Browserify options
-var browserifyOpts = {
-  entries: ENTRY_POINT,
-  debug: true,
-  transform: [babelify]
-}
+gulp.task('build-clean', function(cb) {
+  return del([OUTPUT_FILE_DIR + '/**/*'], cb);
+});
 
-var opts = assign({}, watchify.args, browserifyOpts);
-
-// Initialize file watcher
-var watcher = watchify(browserify(opts));
-
-// Compiles the files and assets pointed to by the entry point
-var bundle = function() {
-  // Print fancy output to the console. This is styled to match the
-  // default Gulp console output.
-  var currentTime = chalk.black(new Date().toLocaleTimeString('en-GB'));
-  var currentTask = chalk.cyan('Browserify');
-  console.log('[' + currentTime + '] Running \'' + currentTask + '\'...');
-
-  // Run transformations
-  return watcher
-    .bundle()
+gulp.task('build-scripts', function(cb) {
+  return gulp.src(INPUT_FILE_GLOB)
     .pipe(plumber())
-    .pipe(source(OUTPUT_FILE_NAME))
     .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(sourcemaps.init({
+      loadMaps: true
+    }))
+    .pipe(babel())
+    .pipe(stripDebug())
+    // .pipe(uglify())
+    // .pipe(rename({
+    //   suffix: '.min'
+    // }))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(OUTPUT_FILE_DIR));
-}
+    .pipe(gulp.dest(OUTPUT_FILE_DIR))
+});
 
-// Hook into the default gulp task so we can run `gulp` to start watching
-gulp.task('default', bundle);
+gulp.task('build', function(callback) {
+  runSequence('build-clean', 'build-scripts', callback);
+});
 
-// Watch for file changes as a long-running process
-watcher.on('update', bundle);
+gulp.task('test', function() {
+  return gulp.src('tests/test.js', { read: false })
+    .pipe(plumber())
+    .pipe(mocha());
+});

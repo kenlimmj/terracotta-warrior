@@ -2,13 +2,14 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 09:39:42
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-23 21:11:11
+ * @Last Modified time: 2015-05-24 18:03:39
  */
 
 'use strict';
 
 import RandEngine from './RandEngine';
 
+// List of first names
 const defaultFirstNameList = [
   'Admirable', 'Amusing', 'Annoying', 'Anonymous', 'Applaudable', 'Attacked',
   'Baked', 'Balancing', 'Banging', 'Bare', 'Bathing', 'Battling', 'Beaming',
@@ -30,6 +31,7 @@ const defaultFirstNameList = [
   'Wobbling', 'Wrecking', 'Wriggling', 'Yawning', 'Yelling', 'Yellow'
 ];
 
+// List of last names
 const defaultLastNameList = [
   'Actress', 'Amoeba', 'Bacon', 'Batman', 'Beach', 'Bieber', 'Bike',
   'Bulbasaur', 'Bunny', 'Butler', 'Button', 'Cactus', 'Camel', 'Candle',
@@ -58,14 +60,18 @@ export default class {
   }
 
   randUsername(numSize = 3) {
+    // Generate a first and last name
     let firstName = this.engine.randFromArray(this.firstNameList);
     let lastName = this.engine.randFromArray(this.lastNameList);
+
+    // Generate a number to make the username unique
     let id = this.engine.randFullNumber(numSize);
 
     return firstName + lastName + id;
   }
 
   randAvatarUrl(width = 500, height = 500) {
+    // Directly generates a random image with an abstract category
     return this.engine.randImage(width, height, 'abstract');
   }
 }

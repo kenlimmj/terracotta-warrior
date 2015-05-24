@@ -2,7 +2,7 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 09:39:42
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-23 21:28:39
+ * @Last Modified time: 2015-05-24 18:43:49
  */
 
 'use strict';
@@ -10,7 +10,7 @@
 import seedRandom from 'seedrandom';
 
 const defaultImgProviderUrl = '//lorempixel.com';
-const defaultRNGSeed = 5;
+const defaultRNGSeed = 4;
 
 export default class {
   constructor(options = {}) {
@@ -32,7 +32,14 @@ export default class {
     return result;
   }
 
-  randRange(min = 0, max = 1) {
+  randRange(min = 0, max  = 1) {
+    // Swap the inputs if max is smaller than min
+    if (max < min) {
+      let temp = max;
+      max = min;
+      min = temp;
+    }
+
     return Math.floor(Math.random() * (max - min) + min);
   }
 
