@@ -2,7 +2,7 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 09:39:42
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-24 18:08:14
+ * @Last Modified time: 2015-05-24 21:37:25
  */
 
 'use strict';
@@ -96,7 +96,7 @@ export default class {
     // Switch the punctuation list depending on whether enhanced
     // punctuation is requested
     if (options.enhancedPunctuation) {
-      this.puncList = options.puncList || defaultPuncList;
+      this.puncList = options.puncList || defaultBasePuncList;
     } else {
       this.puncList = options.puncList || defaultEnhancedPuncList;
     }
