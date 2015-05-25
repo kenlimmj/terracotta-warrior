@@ -76,6 +76,7 @@ var opts = {
 
 var tf = new tw.TextFactory(opts);
 ```
+Enabling enhanced punctuation will cause the generator to output "fancy" typographic elements such as em-dashes and ellipses. This is disabled by default because not all typesetting/display systems render these punctuation correctly.
 
 ### Methods
 The following methods are available:
@@ -87,15 +88,39 @@ tf.randSentence(size, puncSpacing, widowThreshold);
 tf.randParagraph(size);
 ```
 
-- `randLetter()` returns a letter chosen at random from the character list
-- `randWord()` returns a word chosen at random from the word list
+- `randLetter()` returns a letter chosen at random from the character list.
+- `randWord()` returns a word chosen at random from the word list.
 - `randTitle(size)` generates a title of length `size`. If `size` is not specified, it defaults to a random value between 3 and 10. The first character in the title will be capitalized.
 - `randSentence(size, widowThreshold)` generates a sentence of length `size`, with the guarantee that punctuation will not appear `widowThreshold` words before the end of the sentence. If no input is specified, `size` defaults to a random value between 10 and 25, and `widowThreshold` defaults to a value of 5. Punctuation is inserted randomly every 11 to 15 words.
 - `randParagraph(size)` generates a paragraph with `size` number of sentences. If `size` is not specified, it defaults to a random value between 4 and 10.
 
-### `UserFactory`
+## `UserFactory`
+The `UserFactory` namespace provides functions that assist with the generation of data related to a user.
 
-### `EquationFactory`
+### Constructor
+The constructor for `UserFactory` has three configuration parameters, shown here with their default values:
+```js
+var opts = {
+    engine: new RandEngine(),           // An instance of RandEngine
+    firstNameList: [...]                // A list of first names
+    lastNameList: [...]                 // A list of last names
+}
+
+var uf = new tw.UserFactory(opts);
+```
+The default values for `firstNameList` and `lastNameList` can be found in `UserFactory.js`. They are omitted here because they are too long.
+
+### Methods
+The following methods are available:
+```js
+uf.randUsername();
+uf.randAvatarUrl();
+```
+
+- `randUsername(size)` generates a username by combining a random entry from `firstNameList`, a random entry from `lastNameList`, and a number of `size` digits, in that order. If `size` is not specified, it defaults to 3.
+- `randAvatarUrl(width, height)` generates a URL to an image avatar. This is actually a wrapper for `randImage` from the `RandEngine` namespace with `category = 'abstract'`. If `width` and `height` are not specified, they each default to 500px.
+
+## `EquationFactory`
 
 - ``Equation.randTerm(n)`` generates n random variables. For example ``Equation.randTerm(3)`` could return ``7xyz``. If the argument is not specified, it defaults to producing not more than 3 variables. If variables, by random chance, repeat, they will be combined. For example if the function would have returned ``dxd``, it will instead return ``d^2x``. The variables in the result appear in sorted alphabetical order.
 - ``Equation.randExpression(n)`` generates an expression containing n random terms. For example, ``Equation.randExpression(2)`` could give you ``3xy+4k``. If the argument is not specified, it defaults to producing not more than 3 terms.
@@ -103,7 +128,7 @@ tf.randParagraph(size);
 - ``Equation.randCommand()`` generates a random LaTeX command and accompanying expression. For example it could return ``\int_x^y 3abc da``.
 - ``Equation.wrapMath(eqn)`` is a helper function that wraps ``eqn`` in LaTeX/MathJax compatible math display environment wrappers. That is to say it appends double dollar signs before and after the equation markup.
 
-### `MarkdownFactory`
+## `MarkdownFactory`
 
 - ``Markdown.randImageMarkup()`` generates Markdown markup containing a random image.
 - ``Markdown.randItemList(n)`` generates Markdown markup that produces an itemized list of sentences with n items in total. If the argument is not specified, it defaults to a value between 3 and 5.
