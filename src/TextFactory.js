@@ -2,7 +2,7 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 09:39:42
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-24 21:37:25
+ * @Last Modified time: 2015-05-25 16:19:14
  */
 
 'use strict';
@@ -108,7 +108,7 @@ export default class {
   }
 
   randWord() {
-    // Draw a letter at random from the word list
+    // Draw a word at random from the word list
     return this.engine.randFromArray(this.wordList);
   }
 
@@ -127,7 +127,6 @@ export default class {
 
   randSentence(
     size = this.engine.randRange(10, 25),
-    puncSpacing = this.engine.randRange(11, 15),
     widowThreshold = 5
   ) {
     // Seed the result with a capitalized random word
@@ -138,7 +137,7 @@ export default class {
       // Insert punctuation before a word only if punctuation has not
       // already been inserted recently, and if we are not too close
       // to the end of the sentence. This makes everything more realistic.
-      if (i > 1 && i % puncSpacing === 1 && size - i > widowThreshold) {
+      if (i > 1 && i % this.engine.randRange(11, 15) === 1 && size - i > widowThreshold) {
         result += this.engine.randFromArray(this.puncList) + " " + this.randWord();
       } else {
         result += " " + this.randWord();
@@ -149,7 +148,7 @@ export default class {
     return result + this.engine.randFromArray(this.endingPuncList);
   }
 
-  randParagraph(size = this.engine.randRange(3, 10)) {
+  randParagraph(size = this.engine.randRange(4, 10)) {
     // Seed the result with a random sentence
     let result = this.randSentence();
 
