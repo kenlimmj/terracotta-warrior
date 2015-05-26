@@ -146,19 +146,30 @@ var ef = new tw.EquationFactory(opts);
 ```
 The default values for `trigOperators` and `fracOperators` can be found in `src/EquationFactory.js`. They are omitted here for brevity.
 
+### Methods
+The following methods are available:
+```js
+ef.randTerm(size);
+ef.randExpression(size, sorted);
+ef.randFrac();
+ef.randIntegral(type);
+ef.randExpression(size);
+ef.wrapMath(eqn, opts);
+```
+
 - `randTerm(size)` generates a term made from `size` number of variables. The variables are sorted by alphabetical order, and if two identical variables are generated, they are combined with the appropriate coefficients. For example, this function guarantees that the output will be `7ax^2`, rather than `7axx`. If `size` is not specified, it defaults to to a random number between 2 and 4.
 - `randExpression(size, sorted)` generates an expression containing `size` random terms. Terms will be joined using the numerical operators specified in the configuration settings. `sorted` is true by default, and causes terms to appear in alphabetical order. If `size` is not specified, it defaults to a random number between 3 and 5.
 - `randFrac()` generates a fraction using the fraction operator specified in the configuration settings. The numerator and denominator of the fraction will be random expressions.
 - `randIntegral(type)` generates an integral using the integral operator specified in the configuration settings. `type` determines the type of integrand. If `type = 'exp'`, the integrand will be a random expression. If `type = 'frac'`, the integrand will be a random fraction. If it is not one of these two options, or if it is not specified, the integrand will be either a random expression or random fraction with equal likelihood.
 - `randEquation(size)` generates an equation with `size` expressions joined using the equality operators defined in the configurations settings. If `size` is not specified, it defaults to a value between 3 and 6.
 - `wrapMath(eqn, opts)` is a helper function that wraps the string `eqn` in LaTeX/MathJax compatible environment wrappers. `opt` has the following properties:
-```js
-var opts = {
-    style: 'traditional' | 'modern',
-    mode: 'display' | 'inline'
-}
-```
-The first option for each property above is the default option. The style selection switches between the `trad*Env` and `modern*Env` delimiters as defined in the configuration settings. The mode selection switches between the `*DispEnv` and `*InlineEnv` delimiters as defined in the configuration settings.
+    ```js
+    var opts = {
+        style: 'traditional' | 'modern',
+        mode: 'display' | 'inline'
+    }
+    ```
+    The first option for each property above is the default option. The style selection switches between the `trad*Env` and `modern*Env` delimiters as defined in the configuration settings. The mode selection switches between the `*DispEnv` and `*InlineEnv` delimiters as defined in the configuration settings.
 
 ## `MarkdownFactory`
 
