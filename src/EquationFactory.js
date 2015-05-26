@@ -2,7 +2,7 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 21:54:18
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-24 10:46:08
+ * @Last Modified time: 2015-05-26 13:32:13
  */
 
 'use strict';
@@ -161,7 +161,7 @@ export default class {
           currentTerm = this.randFrac();
           break;
         case '1':
-          currentTerm = this.randCommand();
+          currentTerm = this.randIntegral();
           break;
         case '2':
         default:
@@ -182,7 +182,7 @@ export default class {
   wrapMath(eqn, opts = {}) {
     // Establish defaults for the kind of wrapper used
     let style = opts.style || 'traditional';
-    let mode = opts.display || 'display';
+    let mode = opts.mode || 'display';
 
     // Initialize placeholders
     let openEnv = null;

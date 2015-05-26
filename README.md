@@ -95,7 +95,7 @@ tf.randParagraph(size);
 - `randParagraph(size)` generates a paragraph with `size` number of sentences. If `size` is not specified, it defaults to a random value between 4 and 10.
 
 ## `UserFactory`
-The `UserFactory` namespace provides functions that assist with the generation of data related to a user.
+The `UserFactory` namespace provides functions that assist with the generation of data related to a user. This factory currently doesn't do much, but that will change in the next major update.
 
 ### Constructor
 The constructor for `UserFactory` has three configuration parameters, shown here with their default values:
@@ -108,7 +108,7 @@ var opts = {
 
 var uf = new tw.UserFactory(opts);
 ```
-The default values for `firstNameList` and `lastNameList` can be found in `UserFactory.js`. They are omitted here because they are too long.
+The default values for `firstNameList` and `lastNameList` can be found in `src/UserFactory.js`. They are omitted here for brevity.
 
 ### Methods
 The following methods are available:
@@ -121,12 +121,44 @@ uf.randAvatarUrl();
 - `randAvatarUrl(width, height)` generates a URL to an image avatar. This is actually a wrapper for `randImage` from the `RandEngine` namespace with `category = 'abstract'`. If `width` and `height` are not specified, they each default to 500px.
 
 ## `EquationFactory`
+The `EquationFactory` namespace provides functions that generate equations written in LaTeX. 
 
-- ``Equation.randTerm(n)`` generates n random variables. For example ``Equation.randTerm(3)`` could return ``7xyz``. If the argument is not specified, it defaults to producing not more than 3 variables. If variables, by random chance, repeat, they will be combined. For example if the function would have returned ``dxd``, it will instead return ``d^2x``. The variables in the result appear in sorted alphabetical order.
-- ``Equation.randExpression(n)`` generates an expression containing n random terms. For example, ``Equation.randExpression(2)`` could give you ``3xy+4k``. If the argument is not specified, it defaults to producing not more than 3 terms.
-- ``Equation.randFrac()`` generates a fraction. The numerator and denominator of the fraction are random expressions.
-- ``Equation.randCommand()`` generates a random LaTeX command and accompanying expression. For example it could return ``\int_x^y 3abc da``.
-- ``Equation.wrapMath(eqn)`` is a helper function that wraps ``eqn`` in LaTeX/MathJax compatible math display environment wrappers. That is to say it appends double dollar signs before and after the equation markup.
+### Constructor
+The constructor for `EquationFactory` has thirteen configuration parameters, shown here with their default values:
+```js
+var opts = {
+    engine: new RandEngine(),           // An instance of RandEngine
+    tf: new TextFactory(),              // An instance of TextFactory
+    integralOperator: '\\int\\!',       // The operator used for integration
+    trigOperators: [...],               // The operators used for trigonometry
+    fracOperator: '\\frac',             // The operator for a fraction
+    numOperators: ['+', '-'],           // Numerical operators
+    equalityOperators: [...],           // Equality operators
+    superOperator: '^',                 // Superscript operator
+    subOperator: '_',                   // Subscript operator
+    tradMathDispEnv: ['$$', '$$'],      // LaTeX math display environment
+    tradMathInlineEnv: ['$', '$'],      // LaTeX math inline environment
+    modernMathDispEnv: ['\[', '\]'],    // LaTeX math display environment
+    modernMathInlineEnv: ['\(', '\)']   // LaTeX math inline environment
+}
+
+var ef = new tw.EquationFactory(opts);
+```
+The default values for `trigOperators` and `fracOperators` can be found in `src/EquationFactory.js`. They are omitted here for brevity.
+
+- `randTerm(size)` generates a term made from `size` number of variables. The variables are sorted by alphabetical order, and if two identical variables are generated, they are combined with the appropriate coefficients. For example, this function guarantees that the output will be `7ax^2`, rather than `7axx`. If `size` is not specified, it defaults to to a random number between 2 and 4.
+- `randExpression(size, sorted)` generates an expression containing `size` random terms. Terms will be joined using the numerical operators specified in the configuration settings. `sorted` is true by default, and causes terms to appear in alphabetical order. If `size` is not specified, it defaults to a random number between 3 and 5.
+- `randFrac()` generates a fraction using the fraction operator specified in the configuration settings. The numerator and denominator of the fraction will be random expressions.
+- `randIntegral(type)` generates an integral using the integral operator specified in the configuration settings. `type` determines the type of integrand. If `type = 'exp'`, the integrand will be a random expression. If `type = 'frac'`, the integrand will be a random fraction. If it is not one of these two options, or if it is not specified, the integrand will be either a random expression or random fraction with equal likelihood.
+- `randEquation(size)` generates an equation with `size` expressions joined using the equality operators defined in the configurations settings. If `size` is not specified, it defaults to a value between 3 and 6.
+- `wrapMath(eqn, opts)` is a helper function that wraps the string `eqn` in LaTeX/MathJax compatible environment wrappers. `opt` has the following properties:
+```js
+var opts = {
+    style: 'traditional' | 'modern',
+    mode: 'display' | 'inline'
+}
+```
+The first option for each property above is the default option. The style selection switches between the `trad*Env` and `modern*Env` delimiters as defined in the configuration settings. The mode selection switches between the `*DispEnv` and `*InlineEnv` delimiters as defined in the configuration settings.
 
 ## `MarkdownFactory`
 
