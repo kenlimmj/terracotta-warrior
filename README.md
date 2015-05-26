@@ -163,21 +163,47 @@ ef.wrapMath(eqn, opts);
 - `randIntegral(type)` generates an integral using the integral operator specified in the configuration settings. `type` determines the type of integrand. If `type = 'exp'`, the integrand will be a random expression. If `type = 'frac'`, the integrand will be a random fraction. If it is not one of these two options, or if it is not specified, the integrand will be either a random expression or random fraction with equal likelihood.
 - `randEquation(size)` generates an equation with `size` expressions joined using the equality operators defined in the configurations settings. If `size` is not specified, it defaults to a value between 3 and 6.
 - `wrapMath(eqn, opts)` is a helper function that wraps the string `eqn` in LaTeX/MathJax compatible environment wrappers. `opt` has the following properties:
-    ```js
-    var opts = {
-        style: 'traditional' | 'modern',
-        mode: 'display' | 'inline'
-    }
-    ```
+```js
+var opts = {
+    style: 'traditional' | 'modern',
+    mode: 'display' | 'inline'
+}
+```
     The first option for each property above is the default option. The style selection switches between the `trad*Env` and `modern*Env` delimiters as defined in the configuration settings. The mode selection switches between the `*DispEnv` and `*InlineEnv` delimiters as defined in the configuration settings.
 
 ## `MarkdownFactory`
+The `MarkdownFactory` namespace provides functions that assist with the generation of rich-text data that compiles correctly in Markdown.
 
-- ``Markdown.randImageMarkup()`` generates Markdown markup containing a random image.
-- ``Markdown.randItemList(n)`` generates Markdown markup that produces an itemized list of sentences with n items in total. If the argument is not specified, it defaults to a value between 3 and 5.
-- ``Markdown.randEnumList(n)`` generates Markdown markup that produces an enumerated list of sentences with n items in total. If the argument is not specified, it defaults to a value between 3 and 5.
-- ``Markdown.randQuote()`` generates Markdown markup for a sentence placed within a quote block.
-- ``Markdown.randContent(n)`` generates Markdown markup for n elements worth of content. Each element could be an enumerated list, itemized list, equation, paragraph text, image, or quote. If the argument is not specified, it defaults to a value between 3 and 7.
+### Constructor
+The constructor for `MarkdownFactory` has five configuration parameters, shown here with their default values:
+```js
+var opts = {
+    engine: new RandEngine(),           // An instance of RandEngine
+    tf: new TextFactory(),              // An instance of TextFactory
+    ef: new EquationFactory(),          // An instance of EquationFactory
+    itemSyntax: '- ',                   // The delimiter for itemized lists
+    enumSyntax: '* ',                   // The delimiter for enum lists
+    quoteSyntax: '> '                   // The delimiter for quotes
+}
+
+var mf = new tw.MarkdownFactory(opts);
+```
+
+### Methods
+The following methods are available:
+```js
+mf.randImageMarkup(width, height);
+mf.randItemSize(size);
+mf.randEnumList(size);
+mf.randQuote();
+mf.randContent(size, noConsecutive);
+```
+
+- `randImageMarkup(width, height)` generates markup encapsulating a random image and random alt text. The dimensions of the image are given by `width` and `height`. Both values default to 500px if not specified. 
+- `randItemList(size)` generates markup for an itemized list of random text with `size` entries. If `size` is not specified, it defaults to a random value between 3 and 5.
+- `randEnumList(size)` generates markup for an enumerated list of random text with `size` entries. If `size` is not specified, it defaults to a random value between 3 and 5.
+- `randQuote()` generates markup for a block-quote containing a random sentence. 
+- `randContent(size, noConsecutive)` generates `size` paragraphs of random content (i.e. a random image, itemized list, enumerated list, quote, or plain text). If `size` is not specified, it defaults to a random value between 3 and 7. `noConsecutive` is false by default. If set to true, it guarantees that consecutive items will be different (e.g. there will not be an itemized list, followed by an itemized list again).
 
 ## Bug Tracking and Feature Requests
 
