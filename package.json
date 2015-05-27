@@ -1,6 +1,6 @@
 {
   "name": "terracotta-warrior",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Another fake data generator - except this one does MathJax/LaTeX equations, Markdown, and all other fancy things.",
   "main": "dist/terracottaWarrior.js",
   "dependencies": {
