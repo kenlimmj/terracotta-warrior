@@ -2,7 +2,7 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 09:39:42
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-24 11:24:06
+ * @Last Modified time: 2015-05-24 18:43:49
  */
 
 'use strict';
@@ -56,6 +56,13 @@ var _default = (function () {
     value: function randRange() {
       var min = arguments[0] === undefined ? 0 : arguments[0];
       var max = arguments[1] === undefined ? 1 : arguments[1];
+
+      // Swap the inputs if max is smaller than min
+      if (max < min) {
+        var temp = max;
+        max = min;
+        min = temp;
+      }
 
       return Math.floor(Math.random() * (max - min) + min);
     }

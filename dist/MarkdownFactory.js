@@ -2,7 +2,7 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 20:58:28
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-23 21:53:00
+ * @Last Modified time: 2015-05-26 16:22:50
  */
 
 'use strict';
@@ -25,6 +25,10 @@ var _TextFactory = require('./TextFactory');
 
 var _TextFactory2 = _interopRequireDefault(_TextFactory);
 
+var _EquationFactory = require('.EquationFactory');
+
+var _EquationFactory2 = _interopRequireDefault(_EquationFactory);
+
 var defaultItemSyntax = '- ';
 var defaultEnumSyntax = '* ';
 var defaultQuoteSyntax = '> ';
@@ -36,9 +40,8 @@ var _default = (function () {
     _classCallCheck(this, _class);
 
     this.engine = options.engine || new _RandEngine2['default']();
-    this.tf = new _TextFactory2['default']({
-      engine: this.engine
-    });
+    this.tf = new _TextFactory2['default']({ engine: this.engine });
+    this.ef = new _EquationFactory2['default']({ engine: this.engine });
 
     this.itemSyntax = options.itemSyntax || defaultItemSyntax;
     this.enumSyntax = options.enumSyntax || defaultEnumSyntax;
@@ -48,8 +51,11 @@ var _default = (function () {
   _createClass(_class, [{
     key: 'randImageMarkup',
     value: function randImageMarkup() {
+      var width = arguments[0] === undefined ? 500 : arguments[0];
+      var height = arguments[1] === undefined ? 500 : arguments[1];
+
       var altText = '![' + this.tf.randTitle() + ']';
-      var markupImage = '(' + this.engine.randImage() + ')';
+      var markupImage = '(' + this.engine.randImage(width, height) + ')';
 
       return altText + markupImage;
     }
@@ -98,7 +104,7 @@ var _default = (function () {
     key: 'randContent',
     value: function randContent() {
       var size = arguments[0] === undefined ? this.engine.randRange(3, 7) : arguments[0];
-      var noRepeat = arguments[1] === undefined ? false : arguments[1];
+      var noConsecutive = arguments[1] === undefined ? false : arguments[1];
 
       var result = this.tf.randParagraph();
       var prevRoll = -1;
@@ -106,7 +112,7 @@ var _default = (function () {
       for (var i = 1; i < size; i++) {
         var diceRoll = this.engine.randRange(0, 5);
 
-        if (noRepeat) {
+        if (noConsecutive) {
           while (diceRoll === prevRoll) {
             diceRoll = this.engine.randRange(0, 5);
           }
@@ -122,7 +128,7 @@ var _default = (function () {
             result += '\n\n' + this.randItemList();
             break;
           case 2:
-            // result += "\n\n" + Equation.wrapMath(Equation.randEquation());
+            result += '\n\n' + ef.wrapMath(ef.randEquation());
             break;
           case 3:
             result += '\n\n' + this.randQuote();

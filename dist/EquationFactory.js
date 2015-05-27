@@ -2,7 +2,7 @@
  * @Author: Lim Mingjie, Kenneth
  * @Date:   2015-05-23 21:54:18
  * @Last Modified by:   Lim Mingjie, Kenneth
- * @Last Modified time: 2015-05-24 10:46:08
+ * @Last Modified time: 2015-05-26 13:32:13
  */
 
 'use strict';
@@ -187,7 +187,7 @@ var _default = (function () {
             currentTerm = this.randFrac();
             break;
           case '1':
-            currentTerm = this.randCommand();
+            currentTerm = this.randIntegral();
             break;
           case '2':
           default:
@@ -211,7 +211,7 @@ var _default = (function () {
 
       // Establish defaults for the kind of wrapper used
       var style = opts.style || 'traditional';
-      var mode = opts.display || 'display';
+      var mode = opts.mode || 'display';
 
       // Initialize placeholders
       var openEnv = null;
