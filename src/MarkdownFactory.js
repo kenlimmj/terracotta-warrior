@@ -9,7 +9,7 @@
 
 import RandEngine from './RandEngine';
 import TextFactory from './TextFactory';
-import EquationFactory from '.EquationFactory';
+import EquationFactory from './EquationFactory';
 
 const defaultItemSyntax = '- ';
 const defaultEnumSyntax = '* ';
