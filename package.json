@@ -4,7 +4,7 @@
   "description": "Another fake data generator - except this one does MathJax/LaTeX equations, Markdown, and all other fancy things.",
   "main": "dist/terracottaWarrior.js",
   "dependencies": {
-    "lodash": "^3.9.1",
+    "lodash": "^4.17.23",
     "seedrandom": "^2.4.0"
   },
   "devDependencies": {
